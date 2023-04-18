@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\StudentsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +15,16 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('index', [
+        'title' => 'Home Page'
+    ]);
+});
+
+Route::prefix('students')->group(function () {
+    Route::get('/', [StudentsController::class, 'index']);
+    Route::get('/add', [StudentsController::class, 'create']);
+    Route::get('/{id}/edit', [StudentsController::class, 'edit']);
+    Route::post('/store', [StudentsController::class, 'store']);
+    Route::put('/{id}', [StudentsController::class, 'update']);
+    Route::delete('/{id}', [StudentsController::class, 'destroy']);
 });
